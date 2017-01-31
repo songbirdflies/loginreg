@@ -49,7 +49,7 @@ gulp.task('html', ['inject', 'partials'], function () {
     .pipe(jsFilter.restore)
     .pipe(cssFilter)
     // .pipe($.sourcemaps.init())
-    .pipe($.replace('../../bower_components/bootstrap-sass/assets/fonts/bootstrap/', '../fonts/'))
+    .pipe($.replace('../../../bower_components/bootstrap-sass/assets/fonts/bootstrap/', '../fonts/'))
     .pipe($.cssnano())
     .pipe($.rev())
     // .pipe($.sourcemaps.write('maps'))
@@ -73,6 +73,7 @@ gulp.task('fonts', function () {
   return gulp.src($.mainBowerFiles())
     .pipe($.filter('**/*.{eot,otf,svg,ttf,woff,woff2}'))
     .pipe($.flatten())
+    .pipe(gulp.dest(path.join(conf.paths.tmp, '/serve/fonts/')))
     .pipe(gulp.dest(path.join(conf.paths.dist, '/fonts/')));
 });
 
