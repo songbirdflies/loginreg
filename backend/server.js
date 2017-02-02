@@ -3,9 +3,10 @@ var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
-var Message = mongoose.model('Message', {
-	msg: String
-});
+var Message = require('./models/message');
+var User = require('./models/user');
+
+mongoose.Promise = global.Promise;
 
 app.use(bodyParser.json());
 
@@ -25,6 +26,21 @@ app.post('/api/message', function(req, res) {
 	res.status(200);
 })
 
+app.post('/auth/register', function (req, res){
+	console.log(req.body);
+
+	var user = new User(req.body);
+
+	user.save(function(err, result){
+		if(err){
+			res.status(500).send({
+				message: err.message
+			})
+		}
+		res.status(200);
+	})
+})
+
 function getMessages(req, res){
 	Message.find({}).exec(function(err, result){
 		res.send(result);
@@ -38,5 +54,5 @@ mongoose.connect("mongodb://localhost:27017/test", function(err,db){
 });
 
 var server = app.listen(5000, function(){
-	console.log('listening on port ', server.address().port)
+	console.log('listening on port', server.address().port)
 }) //callback lets us know to start response of trying to start a server0
