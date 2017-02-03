@@ -11,4 +11,5 @@ export function config ($logProvider, toastrConfig, $authProvider, API_URL) {
   toastrConfig.progressBar = true;
 
   	$authProvider.signupUrl = API_URL + 'auth/register';
+    $authProvider.loginURL = API_URL + 'auth/login';
 }

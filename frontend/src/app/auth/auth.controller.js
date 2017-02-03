@@ -8,6 +8,20 @@ export class AuthController {
 
 	register() {
 		//console.log('test');
-		this.$auth.signup(this.user);
+		var vm = this;
+
+		this.$auth.signup(this.user).then(function(token){
+			vm.$auth.setToken(token);
+		});
 	}
+
+		login() {
+		//console.log('test');
+		var vm = this;
+
+		this.$auth.login(this.login.user).then(function(token){
+			vm.$auth.setToken(token);
+		});
+	}
+
 }
